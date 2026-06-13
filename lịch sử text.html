@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hành Trình Tìm Lại Ký Ức Lịch Sử</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:url("https://images.unsplash.com/photo-1461360370896-922624d12aa1?w=1200") center/cover;
+    margin:0;
+    padding:0;
+}
+
+.game{
+    max-width:800px;
+    margin:50px auto;
+    background:rgba(255,255,255,0.95);
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 0 15px black;
+}
+
+h1{
+    text-align:center;
+    color:#8b0000;
+}
+
+#story{
+    font-size:20px;
+    margin-bottom:20px;
+    line-height:1.6;
+}
+
+button{
+    display:block;
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    font-size:16px;
+    border:none;
+    border-radius:8px;
+    background:#8b0000;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#b22222;
+}
+
+#memory{
+    font-weight:bold;
+    color:green;
+    margin-top:15px;
+}
+
+#progress{
+    text-align:center;
+    font-size:20px;
+    margin-bottom:15px;
+}
+</style>
+
+</head>
+<body>
+
+<div class="game">
+
+<h1>🕰 HÀNH TRÌNH TÌM LẠI KÝ ỨC LỊCH SỬ 🕰</h1>
+
+<div id="progress">Mảnh ký ức: 0/5</div>
+
+<div id="story"></div>
+
+<div id="choices"></div>
+
+<div id="memory"></div>
+
+</div>
+
+<script>
+
+const stages = [
+
+{
+story:"Bạn tỉnh dậy giữa màn sương thời gian. Mảnh ký ức đầu tiên hiện ra: 'Đảng Cộng sản Việt Nam được thành lập năm nào?'",
+answers:["1925","1930","1945"],
+correct:1,
+memory:"📜 Bạn đã thu hồi ký ức về sự ra đời của Đảng Cộng sản Việt Nam (1930)."
+},
+
+{
+story:"Bạn bước tới cánh cổng vàng mang tên Độc Lập. Câu hỏi xuất hiện: 'Cách mạng Tháng Tám thành công năm nào?'",
+answers:["1945","1954","1975"],
+correct:0,
+memory:"📜 Bạn đã thu hồi ký ức về Cách mạng Tháng Tám năm 1945."
+},
+
+{
+story:"Một chiến trường hiện lên trước mắt. 'Chiến thắng Điện Biên Phủ diễn ra năm nào?'",
+answers:["1954","1968","1975"],
+correct:0,
+memory:"📜 Bạn đã thu hồi ký ức về chiến thắng Điện Biên Phủ lừng lẫy năm châu."
+},
+
+{
+story:"Bạn đến bên Dinh Độc Lập. 'Miền Nam hoàn toàn giải phóng năm nào?'",
+answers:["1973","1975","1986"],
+correct:1,
+memory:"📜 Bạn đã thu hồi ký ức về Đại thắng mùa Xuân 1975."
+},
+
+{
+story:"Mảnh ký ức cuối cùng xuất hiện. 'Đại hội nào khởi xướng công cuộc Đổi mới?'",
+answers:["Đại hội IV","Đại hội V","Đại hội VI"],
+correct:2,
+memory:"📜 Bạn đã thu hồi ký ức về công cuộc Đổi mới năm 1986."
+}
+
+];
+
+let current = 0;
+let memories = 0;
+
+function loadStage(){
+
+if(current >= stages.length){
+
+document.getElementById("story").innerHTML=
+"🏆 Chúc mừng! Bạn đã tìm lại toàn bộ ký ức lịch sử và trở về hiện tại.<br><br>Việt Nam đã trải qua hành trình đấu tranh, xây dựng và phát triển đầy hào hùng.";
+
+document.getElementById("choices").innerHTML="";
+document.getElementById("memory").innerHTML=
+"⭐ Hoàn thành nhiệm vụ: Nhà Khám Phá Lịch Sử";
+
+return;
+}
+
+let stage = stages[current];
+
+document.getElementById("story").innerHTML=stage.story;
+
+let buttons="";
+
+stage.answers.forEach((answer,index)=>{
+buttons += `<button onclick="checkAnswer(${index})">${answer}</button>`;
+});
+
+document.getElementById("choices").innerHTML=buttons;
+}
+
+function checkAnswer(choice){
+
+if(choice === stages[current].correct){
+
+memories++;
+
+document.getElementById("memory").innerHTML=
+stages[current].memory;
+
+document.getElementById("progress").innerHTML=
+" Mảnh ký ức: "+memories+"/5";
+
+current++;
+
+setTimeout(loadStage,1500);
+
+}
+else{
+
+document.getElementById("memory").innerHTML=
+"❌ Ký ức bị nhiễu! Hãy thử lại.";
+
+}
+
+}
+
+loadStage();
+
+</script>
+
+</body>
+</html>
